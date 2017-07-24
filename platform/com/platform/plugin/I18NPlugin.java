@@ -25,14 +25,8 @@ public class I18NPlugin implements IPlugin {
 
     public static final String i18n_local_zh_CN = "zh_CN";
     
-    public static final String i18n_local_zh_HK = "zh_HK";
-    
-    public static final String i18n_local_zh_TW = "zh_TW";
-    
     public static final String i18n_local_en_US = "en_US";
     
-    public static final String i18n_local_ja = "ja";
-
 	private static final Map<String, Map<String, String>> resourceBundleMap = new HashMap<String, Map<String, String>>();
 
 	/**
@@ -45,18 +39,10 @@ public class I18NPlugin implements IPlugin {
 		if(i18n.equals(i18n_local_zh_CN)){
 			val = "_zhcn";
 			
-		} else if(i18n.equals(i18n_local_en_US)){
+		} else if(i18n.equals(i18n_local_en_US)) {
 			val = "_enus";
-			
-		} else if(i18n.equals(i18n_local_ja)){
-			val = "_ja";
-			
-		} else if(i18n.equals(i18n_local_zh_HK)){
-			val = "_zhhk";
-			
-		} else if(i18n.equals(i18n_local_zh_TW)){
-			val = "_zhtw";
 		}
+
 		return val;
 	}
 	
@@ -89,19 +75,8 @@ public class I18NPlugin implements IPlugin {
 		localePram = localePram.toLowerCase();
 		if(localePram.equals("zh") || localePram.equals("zh_cn")){
 			localePram = i18n_local_zh_CN;
-			
 		}else if(localePram.equals("en") || localePram.equals("en_us")){
 			localePram = i18n_local_en_US;
-		
-		}else if(localePram.equals("ja") || localePram.equals("ja_jp")){
-			localePram = i18n_local_ja;
-			
-		} else if(localePram.equals("zh_hk")){
-			localePram = i18n_local_zh_HK;
-			
-		} else if(localePram.equals("zh_tw")){
-			localePram = i18n_local_zh_TW;
-			
 		} else{
 			localePram = i18n_local_zh_CN;
 		}
@@ -113,22 +88,17 @@ public class I18NPlugin implements IPlugin {
 	public boolean start() {
 		String[] languages = {
 				i18n_local_zh_CN, 
-				i18n_local_zh_HK, 
-				i18n_local_zh_TW,
 				i18n_local_en_US,
-				i18n_local_ja
 			};
 
-		String fileNamePrefix = PropKit.get(ConstantInit.config_i18n_filePrefix);
 		String fileName = null;
+		String fileNamePrefix = PropKit.get(ConstantInit.config_i18n_filePrefix);
 		String classesPath = ToolDirFile.getClassesPath();
 		
 		for (String language : languages) {
 			fileName = fileNamePrefix + "_" + language + ".properties";// + File.separator + 
 			InputStream inputStream = null;
 			try {
-				//inputStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
-				//inputStream = I18NPlugin.class.getResourceAsStream(fileName);// "/init.properties"
 				if(log.isDebugEnabled()) log.debug("加载国际化资源文件：" + classesPath  + File.separator +  fileName);
 				inputStream = new FileInputStream(new File(classesPath  + File.separator +  fileName));
 				
